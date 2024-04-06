@@ -13,6 +13,6 @@ def page(context: BrowserContext, playwright):
 
 
 @pytest.fixture()
-def login(page):
-    login_page = MainPage(page)
-    login_page.login()
+def authorization(page):
+    authorization_page = MainPage(page)
+    authorization_page.login()
