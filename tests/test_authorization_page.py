@@ -26,7 +26,7 @@ def test_log_with_wrong_login(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(login=WRONG_LOGIN)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_full()
 
 
 def test_log_with_wrong_password(page):
@@ -38,7 +38,7 @@ def test_log_with_wrong_password(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(password=WRONG_PASSWORD)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_full()
 
 
 def test_log_with_wrong_all(page):
@@ -50,7 +50,7 @@ def test_log_with_wrong_all(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(login=WRONG_PASSWORD, password=WRONG_PASSWORD)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_full()
 
 
 def test_log_with_empty_login(page):
@@ -62,7 +62,7 @@ def test_log_with_empty_login(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(login=EMPTY_LOGIN)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_empty()
 
 
 def test_log_with_empty_password(page):
@@ -74,7 +74,7 @@ def test_log_with_empty_password(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(password=EMPTY_PASSWORD)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_full()
 
 
 def test_log_with_empty_all(page):
@@ -86,4 +86,4 @@ def test_log_with_empty_all(page):
     main_page = MainPage(page)
     main_page.open()
     main_page.login(login=EMPTY_LOGIN, password=EMPTY_PASSWORD)
-    main_page.check_wrong_authorization_messages()
+    main_page.check_wrong_authorization_messages_empty()

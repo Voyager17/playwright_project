@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 
 
 class BasePage:
@@ -32,3 +32,8 @@ class BasePage:
         assert (
             expected_color == current_color
         ), f"Current color is different = {current_color}"
+
+    @allure.step("Check that element isn't visible")
+    def check_element_is_not_visible(self, locator):
+        element: Locator = self.find(locator)
+        expect(element, f"Element {element} is visible").not_to_be_visible()

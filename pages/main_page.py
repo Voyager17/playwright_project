@@ -20,7 +20,7 @@ class MainPage(BasePage):
         self.page.hover(MainLoc.USERS_ICON_BUTTON)
         expect(self.find(MainLoc.USERS_ID_BUTTON)).to_contain_text(USERS_ID)
 
-    def check_wrong_authorization_messages(self):
+    def check_wrong_authorization_messages_full(self):
         self.check_message_color(
             RegisterLoc.NUMBER_LOGIN_MESSAGE, RegisterLoc.ERROR_MESSAGE_COLOR
         )
@@ -39,6 +39,22 @@ class MainPage(BasePage):
             RegisterLoc.PASSWORD_SIGN_ERROR, RegisterLoc.ERROR_MESSAGE_COLOR
         )
 
+    def check_wrong_authorization_messages_empty(self):
+        self.check_message_color(
+            RegisterLoc.NUMBER_LOGIN_MESSAGE, RegisterLoc.ERROR_MESSAGE_COLOR
+        )
+
+        self.check_error_authorization_text_empty(RegisterLoc.LOGIN_SIGN_ERROR)
+        self.check_message_color(
+            RegisterLoc.LOGIN_SIGN_ERROR, RegisterLoc.ERROR_MESSAGE_COLOR
+        )
+
+        self.check_message_color(
+            RegisterLoc.PASSWORD_MESSAGE, RegisterLoc.COMMON_MESSAGE_COLOR
+        )
+
+        self.check_element_is_not_visible(RegisterLoc.PASSWORD_SIGN_ERROR)
+
     def check_message_color(self, locator, expected_color):
         current_color = self.find_color_of_element(locator)
         assert (
@@ -50,3 +66,9 @@ class MainPage(BasePage):
         expect(
             element, f"Locator has another text {element.text_content()}"
         ).to_contain_text("Данные для входа неверны")
+
+    def check_error_authorization_text_empty(self, locator):
+        element: Locator = self.find(locator)
+        expect(
+            element, f"Locator has another text {element.text_content()}"
+        ).to_contain_text("Поле должно быть заполнено")
