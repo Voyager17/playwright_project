@@ -1,12 +1,12 @@
 from pages.main_page import MainPage
 
-WRONG_PASSWORD: str = "wrong_password43734737"
-WRONG_LOGIN: str = "wrong_login7347347"
-EMPTY_LOGIN: str = ""
-EMPTY_PASSWORD: str = ""
+WRONG_PASSWORD = "wrong_password43734737"
+WRONG_LOGIN = "wrong_login7347347"
+EMPTY_LOGIN = ""
+EMPTY_PASSWORD = ""
 
 
-def test_authorization(page, authorization) -> None:
+def test_authorization(page, authorization):
     """
     1. Open Main page
     2. Make the authorization with right Credentials
@@ -17,7 +17,7 @@ def test_authorization(page, authorization) -> None:
     main_page.check_authorization()
 
 
-def test_log_with_wrong_login(page) -> None:
+def test_log_with_wrong_login(page):
     """
     1. Open Main page
     2. Make the authorization with wrong login
@@ -29,7 +29,7 @@ def test_log_with_wrong_login(page) -> None:
     main_page.check_wrong_authorization_messages_full()
 
 
-def test_log_with_wrong_password(page) -> None:
+def test_log_with_wrong_password(page):
     """
     1. Open Main page
     2. Make the authorization with wrong password
@@ -41,7 +41,7 @@ def test_log_with_wrong_password(page) -> None:
     main_page.check_wrong_authorization_messages_full()
 
 
-def test_log_with_wrong_all(page) -> None:
+def test_log_with_wrong_all(page):
     """
     1. Open Main page
     2. Make the authorization with wrong login and password
@@ -53,7 +53,7 @@ def test_log_with_wrong_all(page) -> None:
     main_page.check_wrong_authorization_messages_full()
 
 
-def test_log_with_empty_login(page) -> None:
+def test_log_with_empty_login(page):
     """
     1. Open Main page
     2. Make the authorization with empty login
@@ -65,7 +65,7 @@ def test_log_with_empty_login(page) -> None:
     main_page.check_wrong_authorization_messages_empty()
 
 
-def test_log_with_empty_password(page) -> None:
+def test_log_with_empty_password(page):
     """
     1. Open Main page
     2. Make the authorization with empty password
@@ -77,7 +77,7 @@ def test_log_with_empty_password(page) -> None:
     main_page.check_wrong_authorization_messages_full()
 
 
-def test_log_with_empty_all(page) -> None:
+def test_log_with_empty_all(page):
     """
     1. Open Main page
     2. Make the authorization with empty login and password
