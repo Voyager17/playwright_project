@@ -5,13 +5,16 @@ class MainPageLocators:
 
 
 class RegistrationPageLocators:
-    LOGIN_BUTTON = "[id='sign']"
+    LOGIN_BUTTON = "#sign"
     PASSWORD_BUTTON = "#password"
     SIGN_BUTTON = "#signbutton"
     NUMBER_LOGIN_MESSAGE = "[for='sign']"
     LOGIN_SIGN_ERROR = "#sign_errors"
     PASSWORD_MESSAGE = "[for='password']"
     PASSWORD_SIGN_ERROR = "#password_errors"
+
+
+class TextColors:
     ERROR_MESSAGE_COLOR = "rgb(234, 27, 27)"
     COMMON_MESSAGE_COLOR = "rgb(74, 74, 74)"
 
