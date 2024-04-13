@@ -1,5 +1,3 @@
-import time as t
-
 from CREDENTIALS import PASSWORD, LOGIN, USERS_ID
 from pages.base_page import BasePage
 from pages.locators.locators import MainPageLocators as MainLoc
@@ -87,10 +85,8 @@ class MainPage(BasePage):
             "[data-ftid='autostory-widget_submit-button']"
         )
         check_car_button.click()
-        t.sleep(5)
-
         error_message: Locator = self.find("[data-ftid='error_message']")
         expect(error_message).to_contain_text(
             "Введите корректный VIN / № кузова / госномер"
         )
-        # self.check_message_color(error_message, ColorLoc.ERROR_MESSAGE_COLOR)
+        self.check_message_color("[data-ftid='error_message']", "rgb(219, 0, 26)")
