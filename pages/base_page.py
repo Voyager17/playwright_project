@@ -6,11 +6,11 @@ class BasePage:
     base_url = "https://www.drom.ru"
     page_url = None
 
-    def __init__(self, page: Page):
+    def __init__(self, page: Page) -> None:
         self.page = page
 
     @allure.step("Open the page")
-    def open(self):
+    def open(self) -> None:
         if self.page_url:
             self.page.goto(f"{self.base_url}{self.page_url}")
         else:
@@ -27,13 +27,17 @@ class BasePage:
         return color_value
 
     @allure.step("Check a color of the message")
-    def check_message_color(self, locator, expected_color):
+    def check_message_color(self, locator, expected_color) -> None:
+        """
+        Expected_color must be written as a str of rgb format
+        Example: expected_color = "rgb(74, 74, 74)"
+        """
         current_color: str = self.find_color_of_element(locator)
         assert (
             expected_color == current_color
         ), f"Current color is different = {current_color}"
 
     @allure.step("Check that element isn't visible")
-    def check_element_is_not_visible(self, locator):
+    def check_element_is_not_visible(self, locator) -> None:
         element: Locator = self.find(locator)
         expect(element, f"Element {element} is visible").not_to_be_visible()
