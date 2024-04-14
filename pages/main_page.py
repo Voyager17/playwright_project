@@ -1,5 +1,6 @@
 from CREDENTIALS import PASSWORD, LOGIN, USERS_ID
 from pages.base_page import BasePage
+from pages.locators.locators import FindCarPageLocators as FindCarPageLoc
 from pages.locators.locators import MainPageLocators as MainLoc
 from pages.locators.locators import RegistrationPageLocators as RegisterLoc
 from pages.locators.locators import TextColors as ColorLoc
@@ -86,23 +87,69 @@ class MainPage(BasePage):
         element: Locator = self.find(locator)
         expect(
             element, f"Locator has another text {element.text_content()}"
-        ).to_contain_text(TextLoc.WRONG_CREDENTIALS_ERROR)
+        ).to_contain_text(TextLoc.WRONG_CREDENTIALS_ERROR_MESSAGE)
 
     def check_error_authorization_text_empty(self, locator) -> None:
         element: Locator = self.find(locator)
         expect(
             element, f"Locator has another text {element.text_content()}"
-        ).to_contain_text(TextLoc.EMPTY_LOGIN_ERROR)
+        ).to_contain_text(TextLoc.EMPTY_LOGIN_ERROR_MESSAGE)
 
-    def check_car_before_buying_incorrect_cases(self, number) -> None:
+    def put_data_to_find_car_by_its_number(self, number):
         data_field: Locator = self.find(MainLoc.CAR_NUMBER_CHECKING_FIELD)
         data_field.wait_for(state="visible")
         data_field.fill(number)
 
         check_car_button: Locator = self.find(MainLoc.CHECK_CAR_NUMBER_BUTTON)
         check_car_button.click()
+
+    def check_car_before_buying_incorrect_cases(self, number: str) -> None:
+        self.put_data_to_find_car_by_its_number(number)
         error_message: Locator = self.find(MainLoc.CAR_NUMBER_ERROR_TEXT)
-        expect(error_message).to_contain_text(TextLoc.CAR_NUMBER_ERROR)
+        expect(error_message).to_contain_text(TextLoc.CAR_NUMBER_ERROR_MESSAGE)
         self.check_message_color(
             MainLoc.CAR_NUMBER_ERROR_TEXT, ColorLoc.CAR_NUMBER_ERROR_COLOR
+        )
+
+    def check_car_before_buying_negative_cases(
+        self,
+        number: str,
+        expected_text: str = TextLoc.CANT_FIND_CAR_BY_NUMBER_ERROR_MESSAGE,
+    ) -> None:
+        """
+        By default, expected_text expects error when it can't find a car by its NUMBER
+        """
+        self.put_data_to_find_car_by_its_number(number)
+        not_found_text: Locator = self.find(FindCarPageLoc.CAR_NOT_FOUND_TEXT)
+        not_found_text.wait_for(state="visible")
+        self.check_matching_of_texts(
+            locator=not_found_text,
+            expected_text=expected_text,
+            additional_info=number,
+        )
+
+    def check_car_before_buying_positive_cases_by_number(
+        self, number: str, expected_text: str = TextLoc.GOVERNMENT_NUMBER_MESSAGE
+    ) -> None:
+        """
+        By default, expected_text expects government number when it finds a car by its NUMBER
+        """
+        self.put_data_to_find_car_by_its_number(number)
+        found_text: Locator = self.find(FindCarPageLoc.GOVERNMENT_NUMBER_TEXT)
+        found_text.wait_for(state="visible")
+        self.check_matching_of_texts(
+            locator=found_text, expected_text=expected_text, additional_info=number
+        )
+
+    def check_car_before_buying_positive_cases_by_vin(
+        self, number: str, expected_text: str = "VIN: "
+    ) -> None:
+        """
+        By default, expected_text expects government number when it finds a car by its NUMBER
+        """
+        self.put_data_to_find_car_by_its_number(number)
+        found_text: Locator = self.find(FindCarPageLoc.VIN_NUMBER_TEXT).first
+        found_text.wait_for(state="visible")
+        self.check_matching_of_texts(
+            locator=found_text, expected_text=expected_text, additional_info=number
         )
