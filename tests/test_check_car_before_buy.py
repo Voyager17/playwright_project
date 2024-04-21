@@ -1,3 +1,5 @@
+import allure
+import pytest
 from pages.locators.locators import Texts as TextLoc
 from pages.main_page import MainPage
 
@@ -14,6 +16,11 @@ POSITIVE_CAR_NUMBER = "Т589УН77"
 POSITIVE_CAR_VIN = "WAUYP64B01N141245"
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with incorrect data")
+@allure.title("Check a car with incorrect numerals")
 def test_incorrect_numerals(page) -> None:
     """
     1. Open Main page
@@ -25,6 +32,10 @@ def test_incorrect_numerals(page) -> None:
     main_page.check_car_before_buying_incorrect_cases(INCORRECT_NUMERALS_MESSAGE)
 
 
+@pytest.mark.regression
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with incorrect data")
+@allure.title("Check a car with incorrect letters")
 def test_incorrect_letters(page) -> None:
     """
     1. Open Main page
@@ -36,6 +47,10 @@ def test_incorrect_letters(page) -> None:
     main_page.check_car_before_buying_incorrect_cases(INCORRECT_LETTERS_MESSAGE)
 
 
+@pytest.mark.regression
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with incorrect data")
+@allure.title("Check a car with incorrect numerals and letters")
 def test_incorrect_numerals_and_letters(page) -> None:
     """
     1. Open Main page
@@ -47,6 +62,10 @@ def test_incorrect_numerals_and_letters(page) -> None:
     main_page.check_car_before_buying_incorrect_cases(INCORRECT_MIXED_MESSAGE)
 
 
+@pytest.mark.regression
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with incorrect data")
+@allure.title("Check a car with incorrect empty data")
 def test_incorrect_empty_data(page) -> None:
     """
     1. Open Main page
@@ -58,6 +77,10 @@ def test_incorrect_empty_data(page) -> None:
     main_page.check_car_before_buying_incorrect_cases(INCORRECT_EMPTY_MESSAGE)
 
 
+@pytest.mark.regression
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with incorrect data")
+@allure.title("Check a car with sql injection")
 def test_incorrect_sql_injection(page) -> None:
     """
     1. Open Main page
@@ -69,6 +92,11 @@ def test_incorrect_sql_injection(page) -> None:
     main_page.check_car_before_buying_incorrect_cases(INCORRECT_SQL_MESSAGE)
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with wrong data")
+@allure.title("Check a car with wrong number")
 def test_wrong_car_number(page) -> None:
     """
     1. Open Main page
@@ -80,6 +108,11 @@ def test_wrong_car_number(page) -> None:
     main_page.check_car_before_buying_negative_cases(WRONG_CAR_NUMBER_MESSAGE)
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with wrong data")
+@allure.title("Check a car with wrong vin")
 def test_wrong_car_vin(page) -> None:
     """
     1. Open Main page
@@ -94,6 +127,11 @@ def test_wrong_car_vin(page) -> None:
     )
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with right data")
+@allure.title("Check a car with a right number")
 def test_positive_car_number(page) -> None:
     """
     1. Open Main page
@@ -105,6 +143,11 @@ def test_positive_car_number(page) -> None:
     main_page.check_car_before_buying_positive_cases_by_number(POSITIVE_CAR_NUMBER)
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@allure.feature("Check cars before buying")
+@allure.story("User checks a car with right data")
+@allure.title("Check a car with right vin")
 def test_positive_car_vin(page) -> None:
     """
     1. Open Main page

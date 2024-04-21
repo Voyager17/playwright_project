@@ -1,3 +1,4 @@
+import allure
 from CREDENTIALS import PASSWORD, LOGIN, USERS_ID
 from pages.base_page import BasePage
 from pages.locators.locators import FindCarPageLocators as FindCarPageLoc
@@ -11,6 +12,7 @@ from playwright.sync_api import expect, Locator
 class MainPage(BasePage):
     page_url = "/"
 
+    @allure.step("Make the authorization")
     def login(self, login=LOGIN, password=PASSWORD) -> None:
         registration_button: Locator = self.find(MainLoc.REGISTRATION_BUTTON)
         login_field: Locator = self.find(RegisterLoc.LOGIN_BUTTON)
@@ -34,10 +36,14 @@ class MainPage(BasePage):
         submit_button.click()
         self.page.wait_for_load_state("domcontentloaded")
 
+    @allure.step("Check that authorization is completed by finding user'" "s id")
     def check_authorization(self) -> None:
         self.page.hover(MainLoc.USERS_ICON_BUTTON)
         expect(self.find(MainLoc.USERS_ID_BUTTON)).to_contain_text(USERS_ID)
 
+    @allure.step(
+        "Check the message about wrong authorization when all fields are filled"
+    )
     def check_wrong_authorization_messages_full(self) -> None:
         self.check_message_color(
             RegisterLoc.NUMBER_LOGIN_MESSAGE, ColorLoc.ERROR_MESSAGE_COLOR
@@ -57,6 +63,9 @@ class MainPage(BasePage):
             RegisterLoc.PASSWORD_SIGN_ERROR, ColorLoc.ERROR_MESSAGE_COLOR
         )
 
+    @allure.step(
+        "Check the message about wrong authorization when some of fields is empty"
+    )
     def check_wrong_authorization_messages_empty(self) -> None:
         self.check_message_color(
             RegisterLoc.NUMBER_LOGIN_MESSAGE, ColorLoc.ERROR_MESSAGE_COLOR
@@ -73,6 +82,7 @@ class MainPage(BasePage):
 
         self.check_element_is_not_visible(RegisterLoc.PASSWORD_SIGN_ERROR)
 
+    @allure.step("Check the message's color")
     def check_message_color(self, locator, expected_color) -> None:
         """
         expected_color is must be written as rgb
@@ -83,19 +93,24 @@ class MainPage(BasePage):
             expected_color == current_color
         ), f"Current color is different = {current_color}"
 
+    @allure.step("Check the text in the message about wrong authorization")
     def check_error_authorization_text(self, locator) -> None:
         element: Locator = self.find(locator)
         expect(
             element, f"Locator has another text {element.text_content()}"
         ).to_contain_text(TextLoc.WRONG_CREDENTIALS_ERROR_MESSAGE)
 
-    def check_error_authorization_text_empty(self, locator) -> None:
+    @allure.step(
+        "Check the text in the message about wrong authorization when on of the fields is empty"
+    )
+    def check_error_authorization_text_empty(self, locator: str) -> None:
         element: Locator = self.find(locator)
         expect(
             element, f"Locator has another text {element.text_content()}"
         ).to_contain_text(TextLoc.EMPTY_LOGIN_ERROR_MESSAGE)
 
-    def put_data_to_find_car_by_its_number(self, number):
+    @allure.step("Fill the car's data into the fields to find it")
+    def put_data_to_find_car_by_its_number(self, number: str):
         data_field: Locator = self.find(MainLoc.CAR_NUMBER_CHECKING_FIELD)
         data_field.wait_for(state="visible")
         data_field.fill(number)
@@ -103,6 +118,7 @@ class MainPage(BasePage):
         check_car_button: Locator = self.find(MainLoc.CHECK_CAR_NUMBER_BUTTON)
         check_car_button.click()
 
+    @allure.step("Check incorrect cases when checking car before buying")
     def check_car_before_buying_incorrect_cases(self, number: str) -> None:
         self.put_data_to_find_car_by_its_number(number)
         error_message: Locator = self.find(MainLoc.CAR_NUMBER_ERROR_TEXT)
@@ -111,6 +127,7 @@ class MainPage(BasePage):
             MainLoc.CAR_NUMBER_ERROR_TEXT, ColorLoc.CAR_NUMBER_ERROR_COLOR
         )
 
+    @allure.step("Check negative cases when checking car before buying")
     def check_car_before_buying_negative_cases(
         self,
         number: str,
@@ -128,6 +145,7 @@ class MainPage(BasePage):
             additional_info=number,
         )
 
+    @allure.step("Check positive cases when checking car before buying")
     def check_car_before_buying_positive_cases_by_number(
         self, number: str, expected_text: str = TextLoc.GOVERNMENT_NUMBER_MESSAGE
     ) -> None:
@@ -141,8 +159,9 @@ class MainPage(BasePage):
             locator=found_text, expected_text=expected_text, additional_info=number
         )
 
+    @allure.step("Check positive cases when checking car before buying by vin")
     def check_car_before_buying_positive_cases_by_vin(
-        self, number: str, expected_text: str = "VIN: "
+        self, number: str, expected_text: str = TextLoc.VIN_MESSAGE
     ) -> None:
         """
         By default, expected_text expects government number when it finds a car by its NUMBER

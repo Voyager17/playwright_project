@@ -13,6 +13,6 @@ def page(playwright, context: BrowserContext) -> Page:
 
 
 @pytest.fixture()
-def authorization(page) -> None:
+def authorization(page: Page) -> None:
     authorization_page = MainPage(page)
     authorization_page.login()
