@@ -2,7 +2,7 @@ import allure
 import pytest
 from pages.car_page import CarPage
 
-BMW = "BMW"
+GAC = "GAC"
 AUDI = "Audi"
 ROLLS_ROYCE = "Rolls-Royce"
 ALFA_ROMEO = "Alfa Romeo"
@@ -70,9 +70,9 @@ def test_search_a_car_capslock_english_name(page):
     """
     car_page = CarPage(page)
     car_page.open()
-    car_page.search_a_car(mark=BMW, type_of_the_car=TYPE_OF_THE_CAR)
+    car_page.search_a_car(mark=GAC, type_of_the_car=TYPE_OF_THE_CAR)
     car_page.check_a_result_after_searching(
-        mark=BMW, is_russian_mark=False, type_of_the_car=TYPE_OF_THE_CAR
+        mark=GAC, is_russian_mark=False, type_of_the_car=TYPE_OF_THE_CAR
     )
 
 
