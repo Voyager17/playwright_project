@@ -48,7 +48,7 @@ class BasePage:
         locator: Locator, expected_text: str, additional_info: str = ""
     ) -> None:
         """
-        Locator of the text that you are looking for
+        Locator is locator of the text that you are looking for
         Expected_text is the text that you are expecting
         Additional_info could be anything for example the number/vin of the car
         """
@@ -56,3 +56,9 @@ class BasePage:
             locator,
             f"Text is different: {locator.text_content()}",
         ).to_contain_text(expected_text + f"{additional_info}")
+
+    @allure.step("Check url of the page")
+    def check_url(self, expected_url) -> None:
+        expect(
+            self.page, f"Url isn't matched. Current url is {self.page.url}"
+        ).to_have_url(expected_url)
