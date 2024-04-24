@@ -45,8 +45,8 @@ class MainPage(BasePage):
         self.page.wait_for_load_state("domcontentloaded")
 
     @allure.step("Check that authorization is completed by finding user'" "s id")
-    def check_authorization(self) -> None:
-        users_id = os.getenv("USERS_ID")
+    def check_authorization(self, user_id=None) -> None:
+        users_id = user_id or os.getenv("USERS_ID")
 
         self.page.hover(MainLoc.USERS_ICON_BUTTON)
         expect(self.find(MainLoc.USERS_ID_BUTTON)).to_contain_text(users_id)
