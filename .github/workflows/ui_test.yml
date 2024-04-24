@@ -13,30 +13,44 @@ on:
           - bug
           - regression
           - all
+
 jobs:
   run-tests:
     runs-on: ubuntu-latest
     name: Run autotests
+
     steps:
-      - name: Download repository
+      - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Set up Python environment
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install playwright
+          playwright install
+
+      - name: Install browsers for Playwright
+        run: playwright install
+
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+
       - name: Run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: cd tests && pytest -m regression
+        run: pytest tests/ -m regression
+
       - name: Run simple tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: cd tests && pytest -m smoke
+        run: pytest tests/ -m smoke
+
       - name: Run smoke tests
         if: "github.event.inputs.deployment_target == 'bug'"
-        run: cd tests && pytest -m bug
+        run: pytest tests/ -m bug
+
       - name: Run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: cd tests && pytest
+        run: pytest tests/
