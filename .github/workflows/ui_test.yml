@@ -24,18 +24,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: install dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: run regression tests
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+      - name: Run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
         run: cd tests && pytest -m regression
-      - name: run simple tests
+      - name: Run simple tests
         if: "github.event.inputs.deployment_target == 'smoke'"
         run: cd tests && pytest -m smoke
-      - name: run smoke tests
+      - name: Run smoke tests
         if: "github.event.inputs.deployment_target == 'bug'"
         run: cd tests && pytest -m bug
-      - name: run all tests
+      - name: Run all tests
         if: "github.event.inputs.deployment_target == 'all'"
         run: cd tests && pytest
-
