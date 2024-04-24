@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install playwright
+          pip install pytest playwright
           playwright install
 
       - name: Install browsers for Playwright
@@ -43,11 +43,11 @@ jobs:
         if: "github.event.inputs.deployment_target == 'regression'"
         run: pytest tests/ -m regression
 
-      - name: Run simple tests
+      - name: Run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
         run: pytest tests/ -m smoke
 
-      - name: Run smoke tests
+      - name: Run bugs tests
         if: "github.event.inputs.deployment_target == 'bug'"
         run: pytest tests/ -m bug
 
