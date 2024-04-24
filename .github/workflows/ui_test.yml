@@ -28,14 +28,14 @@ jobs:
         run: pip install -r requirements.txt
       - name: run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: cd tests && pytest -m regression
+        run: pytest tests/ && pytest -m regression
       - name: run simple tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: cd tests && pytest -m smoke
+        run: pytest tests/ && pytest -m smoke
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'bug'"
-        run: cd tests && pytest -m bug
+        run: pytest tests/ && pytest -m bug
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: cd tests && pytest
+        run: pytest tests/ && pytest
 
