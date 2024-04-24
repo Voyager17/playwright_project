@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest playwright
+          pip install -r requirements.txt
           playwright install
 
       - name: Install browsers for Playwright
