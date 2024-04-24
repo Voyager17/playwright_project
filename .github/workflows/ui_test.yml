@@ -7,7 +7,7 @@ on:
         description: select tests set
         required: true
         type: choice
-        default: simple
+        default: smoke
         options:
           - smoke
           - bugs
@@ -45,7 +45,7 @@ jobs:
         continue-on-error: true
       - name: run bugs tests
         if: "github.event.inputs.deployment_target == 'bugs'"
-        run: pytest tests/ && pytest -m simple --alluredir=allure-results
+        run: pytest tests/ && pytest -m bug --alluredir=allure-results
         continue-on-error: true
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
