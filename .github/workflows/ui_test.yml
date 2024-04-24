@@ -1,0 +1,41 @@
+name: UI launching tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: select tests set
+        required: true
+        type: choice
+        default: simple
+        options:
+          - smoke
+          - bug
+          - regression
+          - all
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    name: Run autotests
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+      - name: Set up Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install dependencies
+        run: pip install -r requirements.txt
+      - name: run regression tests
+        if: "github.event.inputs.deployment_target == 'regression'"
+        run: cd tests && pytest -m regression
+      - name: run simple tests
+        if: "github.event.inputs.deployment_target == 'smoke'"
+        run: cd tests && pytest -m smoke
+      - name: run smoke tests
+        if: "github.event.inputs.deployment_target == 'bug'"
+        run: cd tests && pytest -m bug
+      - name: run all tests
+        if: "github.event.inputs.deployment_target == 'all'"
+        run: cd tests && pytest
+
