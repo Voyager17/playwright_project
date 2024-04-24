@@ -1,19 +1,27 @@
+import os
+
 import allure
-from CREDENTIALS import PASSWORD, LOGIN, USERS_ID
+from dotenv import load_dotenv
+from playwright.sync_api import expect, Locator
+
 from pages.base_page import BasePage
 from pages.locators.locators import FindCarPageLocators as FindCarPageLoc
 from pages.locators.locators import MainPageLocators as MainLoc
 from pages.locators.locators import RegistrationPageLocators as RegisterLoc
 from pages.locators.locators import TextColors as ColorLoc
 from pages.locators.locators import Texts as TextLoc
-from playwright.sync_api import expect, Locator
+
+load_dotenv()
 
 
 class MainPage(BasePage):
     page_url = "/"
 
     @allure.step("Make the authorization")
-    def login(self, login=LOGIN, password=PASSWORD) -> None:
+    def login(self, login=None, password=None) -> None:
+        login = login or os.getenv("LOGIN")
+        password = password or os.getenv("PASSWORD")
+
         registration_button: Locator = self.find(MainLoc.REGISTRATION_BUTTON)
         login_field: Locator = self.find(RegisterLoc.LOGIN_BUTTON)
         password_field: Locator = self.find(RegisterLoc.PASSWORD_BUTTON)
@@ -37,9 +45,11 @@ class MainPage(BasePage):
         self.page.wait_for_load_state("domcontentloaded")
 
     @allure.step("Check that authorization is completed by finding user'" "s id")
-    def check_authorization(self) -> None:
+    def check_authorization(self, user_id=None) -> None:
+        users_id = user_id or os.getenv("USERS_ID")
+
         self.page.hover(MainLoc.USERS_ICON_BUTTON)
-        expect(self.find(MainLoc.USERS_ID_BUTTON)).to_contain_text(USERS_ID)
+        expect(self.find(MainLoc.USERS_ID_BUTTON)).to_contain_text(users_id)
 
     @allure.step(
         "Check the message about wrong authorization when all fields are filled"
