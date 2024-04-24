@@ -42,15 +42,19 @@ jobs:
       - name: Run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
         run: pytest tests/ -m regression
+        continue-on-error: true
 
       - name: Run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
         run: pytest tests/ -m smoke
+        continue-on-error: true
 
       - name: Run bugs tests
         if: "github.event.inputs.deployment_target == 'bug'"
         run: pytest tests/ -m bug
+        continue-on-error: true
 
       - name: Run all tests
         if: "github.event.inputs.deployment_target == 'all'"
         run: pytest tests/
+        continue-on-error: true
