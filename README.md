@@ -6,4 +6,4 @@ Just set up requirements.txt and launch pytest with a command pytest -m smoke
 Or just:
 1) pytest
 2) pytest -m regression
-3) pytest -m bugs
+3) pytest -m bug
