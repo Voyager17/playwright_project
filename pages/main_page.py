@@ -44,7 +44,7 @@ class MainPage(BasePage):
         submit_button.click()
         self.page.wait_for_load_state("domcontentloaded")
 
-    @allure.step("Check that authorization is completed by finding user'" "s id")
+    @allure.step("Check that authorization is completed by finding user's id")
     def check_authorization(self, user_id=None) -> None:
         users_id = user_id or os.getenv("USERS_ID")
 
