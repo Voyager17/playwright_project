@@ -12,7 +12,9 @@ class BasePage:
     @allure.step("Open the page")
     def open(self) -> None:
         if self.page_url:
-            self.page.goto(f"{self.base_url}{self.page_url}")
+            self.page.goto(
+                f"{self.base_url}{self.page_url}", wait_until="domcontentloaded"
+            )
         else:
             raise NotImplementedError("Page can not be opened by URL for this page")
 
