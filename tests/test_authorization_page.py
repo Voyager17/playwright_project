@@ -25,7 +25,6 @@ def test_authorization(page, authorization) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with wrong login")
@@ -42,7 +41,6 @@ def test_log_with_wrong_login(page) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with wrong password")
@@ -59,7 +57,6 @@ def test_log_with_wrong_password(page) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with wrong login and password")
@@ -76,7 +73,6 @@ def test_log_with_wrong_all(page) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with empty login")
@@ -93,7 +89,6 @@ def test_log_with_empty_login(page) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with empty password")
@@ -110,7 +105,6 @@ def test_log_with_empty_password(page) -> None:
 
 
 @pytest.mark.regression
-@pytest.mark.bug
 @allure.feature("Authorization")
 @allure.story("User tries to login with wrong data")
 @allure.title("Check logging in with empty login and password")
